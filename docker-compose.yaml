@@ -1,0 +1,17 @@
+services:
+  app:
+    image: fireflyiii/core:latest
+    restart: always
+    environment:
+      - FIREFLY_API_URL=xx
+      - FIREFLY_ACCESS_TOKEN=xx
+      - PONTO_CLIENT_ID=xx
+      - PONTO_CLIENT_SECRET=xx
+    networks:
+      - firefly_iii
+    depends_on:
+      - db
+
+networks:
+  firefly_iii:
+    external: true

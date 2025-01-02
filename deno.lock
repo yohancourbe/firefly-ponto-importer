@@ -1,0 +1,42 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@dx/inject@*": "0.1.17",
+    "jsr:@proxnet/undead-logging@*": "1.2.0",
+    "jsr:@std/assert@*": "1.0.10",
+    "jsr:@std/internal@^1.0.5": "1.0.5",
+    "npm:chalk@^5.3.0": "5.4.1",
+    "npm:reflect-metadata@0.2.2": "0.2.2"
+  },
+  "jsr": {
+    "@dx/inject@0.1.17": {
+      "integrity": "45868f86689a156ce378c7d5bbe3febac9125c5cdf220986e2e1c826c6274dec",
+      "dependencies": [
+        "npm:reflect-metadata"
+      ]
+    },
+    "@proxnet/undead-logging@1.2.0": {
+      "integrity": "59a4db428b5b848b7f51189b173b100ddabf7d86bb9de1a095e5d97b4a867e2c",
+      "dependencies": [
+        "npm:chalk"
+      ]
+    },
+    "@std/assert@1.0.10": {
+      "integrity": "59b5cbac5bd55459a19045d95cc7c2ff787b4f8527c0dd195078ff6f9481fbb3",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/internal@1.0.5": {
+      "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
+    }
+  },
+  "npm": {
+    "chalk@5.4.1": {
+      "integrity": "sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w=="
+    },
+    "reflect-metadata@0.2.2": {
+      "integrity": "sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q=="
+    }
+  }
+}
