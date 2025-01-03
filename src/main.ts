@@ -37,7 +37,6 @@ export class Main {
 
       if (!fireflyAccount) {
         this.logging.info(`New account ${pontoAccount.attributes.reference} found, creating in Firefly`);
-        console.log(pontoAccount.attributes);
         const newFireflyAccount = await this.fireflyAccountsApi.create({
           name: pontoAccount.attributes.description,
           type: FireflyAccountType.Asset,
