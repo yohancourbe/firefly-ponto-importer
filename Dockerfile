@@ -7,5 +7,7 @@ WORKDIR /app
 # Copy the project files to the working directory
 COPY . .
 
+RUN deno install
+
 # Run the Deno application
 CMD ["task", "prod"]
