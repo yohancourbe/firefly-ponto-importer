@@ -1,15 +1,27 @@
 import { Injectable } from "jsr:@dx/inject";
 import { PontoClient } from "../client.ts";
+import { LoggingService } from "../../logging/mod.ts";
 
 @Injectable()
 export class PontoAccountsApi {
-  constructor(private readonly client: PontoClient) {}
+  private readonly watchdogLimit = 1000;
+
+  constructor(private readonly client: PontoClient, private readonly logging: LoggingService) {}
 
   public async list(all = true): Promise<PontoAccount[]> {
     const account: PontoAccount[] = [];
 
     let response;
+    let watchdog = 0;
+    
     do {
+      watchdog++;
+      if(watchdog > this.watchdogLimit) {
+        this.logging.error(`Watchdog limit of ${this.watchdogLimit} reached.`);
+        this.logging.error(`The process will now wait endlessly to prevent restart causing new loops. Investigate the bug et restart application manually.`);
+        await new Promise(() => {});
+      }
+
       response = await this.client.get<PontoAccount[]>(`accounts`, response ? { after: response.meta?.paging.after } : undefined);
 
       if (response.data) {

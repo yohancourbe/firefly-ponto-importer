@@ -4,11 +4,21 @@ import { LoggingService } from "../../logging/mod.ts";
 
 @Injectable()
 export class PontoTransactionsApi {
+  private readonly watchdogLimit = 1000;
+
   constructor(private readonly client: PontoClient, private readonly logging: LoggingService) {
     this.logging.source = "PontoTransactionsApi";
   }
 
-  async list(accountId: string, startTransactionId: string = "", all = true): Promise<PontoTransaction[]> {
+  async list(accountId: string, startTransactionId: string = "", watchdog = 0, all = true): Promise<PontoTransaction[]> {
+
+    // This is a simple watchdog to prevent infinite recursive loops to Ponto API
+    if (watchdog > this.watchdogLimit) {
+      this.logging.error(`Watchdog limit of ${this.watchdogLimit} reached.`);
+      this.logging.error(`The process will now wait endlessly to prevent restart causing new loops. Investigate the bug et restart application manually.`);
+      await new Promise(() => {});
+    }
+
     this.logging.info(`Listing transactions for account ${accountId} starting from ${startTransactionId || "the beginning"}`);
     const transactions: PontoTransaction[] = [];
 
@@ -16,7 +26,7 @@ export class PontoTransactionsApi {
     transactions.push(...response.data);
 
     if (all && response.hasNext()) {
-      const nextPage = await this.list(accountId, response.meta.paging.before);
+      const nextPage = await this.list(accountId, response.meta.paging.before, watchdog++);
       transactions.push(...nextPage);
     }
 
