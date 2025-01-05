@@ -22,10 +22,10 @@ export class PontoTransactionsApi {
     this.logging.info(`Listing transactions for account ${accountId} starting from ${startTransactionId || "the beginning"}`);
     const transactions: PontoTransaction[] = [];
 
-    const response = await this.client.get<PontoTransaction[]>(`accounts/${accountId}/transactions`, startTransactionId ? { after: startTransactionId } : undefined);
+    const response = await this.client.get<PontoTransaction[]>(`accounts/${accountId}/transactions`, startTransactionId ? { before: startTransactionId } : undefined);
     transactions.push(...response.data);
 
-    if (all && response.hasNext()) {
+    if (all && response.hasPrevious()) {
       const nextPage = await this.list(accountId, response.meta.paging.before, watchdog++);
       transactions.push(...nextPage);
     }

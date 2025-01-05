@@ -62,7 +62,8 @@ export class Main {
 
     const pontoTransactions = await this.pontoTransactionsApi.list(account.ponto.id, lastSyncedTransactionId);
 
-    for (const pontoTransaction of pontoTransactions) {
+    // Ponto transactions are sorted in ascending order (newest first), but we want to process them in descending order so earliest is always the last one and thus first one for next sync
+    for (const pontoTransaction of pontoTransactions.sort().reverse()) {
       if (pontoTransaction.attributes.amount === 0) {
         this.logging.info(`Transaction ${pontoTransaction.id} has amount 0, skipping`);
         continue;
