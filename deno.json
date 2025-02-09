@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run --watch -c tsconfig.json main.ts",
+    "dev": "deno run -A --watch --unsafely-ignore-certificate-errors -c tsconfig.json src/main.ts",
     "prod": "deno run -c tsconfig.json --allow-net --allow-env src/main.ts"
   },
   "imports": {
