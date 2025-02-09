@@ -90,7 +90,7 @@ export class PluxeeClient {
   public async getTransactions(type: PluxeeAccountType, page: number = 1): Promise<PluxeeTransaction[]> {
     const transactions: PluxeeTransaction[] = [];
 
-    const document = await this.get(`mon-solde-sodexo-card?type=${type}&page=${page}`);
+    const document = await this.get(`mon-solde-sodexo-card?type=${type}&page=${page - 1}`);
     const transactionRows = document.querySelectorAll(".table > tbody > tr");
 
     for (const row of transactionRows) {
