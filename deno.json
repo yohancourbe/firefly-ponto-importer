@@ -1,12 +1,14 @@
 {
   "tasks": {
-    "dev": "deno run -A --watch --unsafely-ignore-certificate-errors -c tsconfig.json src/main.ts",
-    "prod": "deno run -c tsconfig.json --allow-net --allow-env src/main.ts"
+    "dev": "deno run -A --watch --cert ./pluxee-root-ca.pem -c tsconfig.json src/main.ts",
+    "prod": "deno run -c tsconfig.json --cert ./pluxee-root-ca.pem --allow-net --allow-env src/main.ts"
   },
   "imports": {
-    "@dx/inject": "jsr:@dx/inject@^0.1.17",
-    "@proxnet/undead-logging": "jsr:@proxnet/undead-logging@^1.2.0",
     "@std/assert": "jsr:@std/assert@1",
-    "axios": "npm:axios@^1.7.9"
+    "@std/crypto": "jsr:@std/crypto@1",
+    "@std/encoding/hex": "jsr:@std/encoding/hex@1",
+    "@proxnet/undead-logging": "jsr:@proxnet/undead-logging@^1.2.0",
+    "@dx/inject": "jsr:@dx/inject@^0.1.17",
+    "jsdom": "npm:jsdom@11.12.0"
   }
 }

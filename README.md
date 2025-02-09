@@ -13,3 +13,7 @@
 | `PLUXEE_SYNC_ENABLED`  | Set to `true` if you want to sync your Pluxee transactions                                    |
 | `PLUXEE_USERNAME`      | your Pluxee's username                                                                        |
 | `PLUXEE_PASSWORD`      | your Pluxee's password                                                                        |
+
+# Certificate warning
+
+For some reason, the Root CA of Sectigo is not in the Alpine (nor in Ubuntu) trusted store, so it is included in the repository.

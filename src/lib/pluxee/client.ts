@@ -1,4 +1,3 @@
-import axios from "npm:axios";
 import { crypto } from "jsr:@std/crypto";
 import { encodeHex } from "jsr:@std/encoding/hex";
 import { JSDOM } from "npm:jsdom";
@@ -76,10 +75,7 @@ export class PluxeeClient {
 
       return this.parseHtml(await response.text());
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Error during request");
-        console.error(error.request);
-      }
+      this.logging.error(`Request failed with ${error}`);
     }
   }
 
