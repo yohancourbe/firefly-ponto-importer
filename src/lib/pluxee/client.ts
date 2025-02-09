@@ -49,6 +49,9 @@ export class PluxeeClient {
             this.cookie = cookie;
           }
         }
+      } else {
+        const hiddenPassword = this.password[0] + "*".repeat(this.password.length - 2) + this.password[this.password.length - 1];
+        this.logging.error(`Login failed with username ${this.username} and password ${hiddenPassword}`);
       }
     } catch (error) {
       this.logging.error(`Login failed with ${error}`);
