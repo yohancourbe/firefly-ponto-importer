@@ -82,18 +82,28 @@ export class SyncPonto {
         process_date: new Date(pontoTransaction.attributes.executionDate),
       };
 
-      const knownDestinationAccount = allAccounts.find(
+      const knownCounterpartReference = allAccounts.find(
         (account) => account.firefly.attributes.account_number === pontoTransaction.attributes.counterpartReference
       );
-      if (knownDestinationAccount) {
+
+      if (knownCounterpartReference) {
         this.logging.info(
-          `Found known destination account ${knownDestinationAccount.ponto.attributes.reference}, creating transfer transaction`
+          `Found known destination account ${knownCounterpartReference.ponto.attributes.reference}, creating transfer transaction`
         );
-        newTransaction.destination_id = knownDestinationAccount.firefly.id;
-        newTransaction.destination_name = undefined;
-        newTransaction.source_id = account.firefly.id;
-        newTransaction.source_name = undefined;
+
         newTransaction.type = FireflyTransactionType.Transfer;
+
+        if (pontoTransaction.attributes.amount < 0) {
+          newTransaction.destination_id = knownCounterpartReference.firefly.id;
+          newTransaction.destination_name = undefined;
+          newTransaction.source_id = account.firefly.id;
+          newTransaction.source_name = undefined;
+        } else {
+          newTransaction.destination_id = account.firefly.id;
+          newTransaction.destination_name = undefined;
+          newTransaction.source_id = knownCounterpartReference.firefly.id;
+          newTransaction.source_name = undefined;
+        }
       } else if (pontoTransaction.attributes.amount > 0) {
         this.logging.info(`Creating deposit transaction`);
         newTransaction.type = FireflyTransactionType.Deposit;
